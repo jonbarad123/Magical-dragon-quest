@@ -1,2 +1,2 @@
-# Magical-dragon-quest
+# magical-dragon-quest
 Lorenzo and kimberly story
