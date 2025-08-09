@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Kimberly & Lorenzo’s Magical Dragon Quest — Interactive Draft</title>
+  <title>Kimberly & Lorenzo’s Magical Dragon Quest — Interactive</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
@@ -24,7 +24,7 @@
     .card { background: var(--card); border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,.08); padding: 16px; }
     .scene {
       width: 100%; aspect-ratio: 16/9; border-radius: 18px; overflow: hidden;
-      border: 4px solid #fff; box-shadow: 0 8px 20px rgba(0,0,0,.06); position: relative;
+      border: 4px solid #fff; box-shadow: 0 8px 20px rgba(0,0,0,.06);
     }
     .scene img { width: 100%; height: 100%; object-fit: cover; display:block; }
     .text { font-size: 20px; line-height: 1.55; font-weight: 700; margin: 12px 4px; }
@@ -47,7 +47,7 @@
   <div class="wrap">
     <div class="title">
       Kimberly & Lorenzo’s Magical Dragon Quest
-      <span class="badge">Interactive Draft</span>
+      <span class="badge">Interactive</span>
     </div>
 
     <div class="card">
@@ -61,19 +61,16 @@
       </div>
     </div>
 
-    <div class="footer">Single-file demo • Tap 🔊 for narrator • Works on phone</div>
+    <div class="footer">Enjoy this magical adventure ✨</div>
   </div>
 
   <script>
     function svgPlaceholder(title, color1, color2, emoji) {
-      const svg = `
-        <svg xmlns='http://www.w3.org/2000/svg' width='1600' height='900'>
-          <defs>
-            <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
-              <stop offset='0%' stop-color='${color1}'/>
-              <stop offset='100%' stop-color='${color2}'/>
-            </linearGradient>
-          </defs>
+      const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='1600' height='900'>
+          <defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
+            <stop offset='0%' stop-color='${color1}'/>
+            <stop offset='100%' stop-color='${color2}'/>
+          </linearGradient></defs>
           <rect width='100%' height='100%' fill='url(#g)'/>
           <g font-family='Nunito, Arial, sans-serif' text-anchor='middle'>
             <text x='800' y='450' font-size='160' fill='rgba(255,255,255,.9)'>${emoji}</text>
@@ -84,180 +81,84 @@
     }
 
     const art = {
-      page1:            svgPlaceholder("Whispering Forest • Baby Dragon",   "#66a3ff", "#ffd179", "🐉"),
-      page2_patatan:    svgPlaceholder("Patatan’s Dance",                   "#ff6fa8", "#ffe08a", "🕺"),
-      page2_book:       svgPlaceholder("Lorenzo’s Magic Book",              "#ffd179", "#66d3c0", "📖"),
-      page3_dance:      svgPlaceholder("Happy Hearts Spell",                "#66d3c0", "#a58bff", "✨"),
-      page3_help:       svgPlaceholder("Secret Cave Under Vines",           "#a58bff", "#66d38b", "🌿"),
-      page3_map:        svgPlaceholder("Rainbow Grasslands & Crystal Peak", "#66d38b", "#66a3ff", "🗺️"),
-      page3_dragonlead: svgPlaceholder("Floating Island in the Clouds",     "#6b5cff", "#ff84b0", "🏝️"),
-      page4_unlock:     svgPlaceholder("Crystal Melts Into Sparkles",       "#ffdc5e", "#66d3c0", "💖"),
-      page4_continue:   svgPlaceholder("Glowing Cave • Shadowy Vines",      "#6bd7b9", "#5b8def", "🕸️"),
-      page4_cave:       svgPlaceholder("Crystal Dome • Sleeping Mama",      "#a76be8", "#ffd179", "💤"),
-      page4_fly:        svgPlaceholder("Glide Down Beside the Dome",        "#5b8def", "#ffd179", "☁️"),
-      page4_climb:      svgPlaceholder("Careful Climb • Dragon Prints",     "#9aa3a7", "#66d38b", "👣"),
-      page4_island:     svgPlaceholder("Friendly Shadow Witch",             "#ff9c54", "#6b5cff", "🧙‍♀️"),
-      page4_look:       svgPlaceholder("Mama Dragon Waves",                 "#ff6f6f", "#ffd179", "👋"),
-      page4_patatanhelp:svgPlaceholder("Patatan vs. Giggly Vines",          "#1fcfb2", "#ffb3d1", "🍌"),
-      page5_party:      svgPlaceholder("Forest Party • Gifts for All",      "#b07be2", "#ffcf5e", "🎁"),
+      page1: svgPlaceholder("Whispering Forest • Baby Dragon","#66a3ff","#ffd179","🐉"),
+      page2_patatan: svgPlaceholder("Patatan’s Dance","#ff6fa8","#ffe08a","🕺"),
+      page2_book: svgPlaceholder("Lorenzo’s Magic Book","#ffd179","#66d3c0","📖"),
+      page3_dance: svgPlaceholder("Happy Hearts Spell","#66d3c0","#a58bff","✨"),
+      page3_help: svgPlaceholder("Secret Cave Under Vines","#a58bff","#66d38b","🌿"),
+      page3_map: svgPlaceholder("Rainbow Grasslands & Crystal Peak","#66d38b","#66a3ff","🗺️"),
+      page3_dragonlead: svgPlaceholder("Floating Island in the Clouds","#6b5cff","#ff84b0","🏝️"),
+      page4_unlock: svgPlaceholder("Crystal Melts Into Sparkles","#ffdc5e","#66d3c0","💖"),
+      page4_continue: svgPlaceholder("Glowing Cave • Shadowy Vines","#6bd7b9","#5b8def","🕸️"),
+      page4_cave: svgPlaceholder("Crystal Dome • Sleeping Mama","#a76be8","#ffd179","💤"),
+      page4_fly: svgPlaceholder("Glide Down Beside the Dome","#5b8def","#ffd179","☁️"),
+      page4_climb: svgPlaceholder("Careful Climb • Dragon Prints","#9aa3a7","#66d38b","👣"),
+      page4_island: svgPlaceholder("Friendly Shadow Witch","#ff9c54","#6b5cff","🧙‍♀️"),
+      page4_look: svgPlaceholder("Mama Dragon Waves","#ff6f6f","#ffd179","👋"),
+      page4_patatanhelp: svgPlaceholder("Patatan vs. Giggly Vines","#1fcfb2","#ffb3d1","🍌"),
+      page5_party: svgPlaceholder("Forest Party • Gifts for All","#b07be2","#ffcf5e","🎁"),
     };
 
     const scenes = {
-      page1: {
-        text: "One sunny morning, Kimberly (curly black hair, sparkly backpack) and Lorenzo (brown hair, magic staff) stood at the edge of the Whispering Forest when a baby dragon swooped down. “Help! My mama is missing!”",
-        image: art.page1,
-        options: [
-          { label: "Follow the baby dragon", next: "page2_follow" },
-          { label: "Check Lorenzo’s magic book", next: "page2_book" }
-        ]
-      },
-      page2_follow: {
-        text: "They followed the dragon between golden trees. Sparkles floated in the air—and a cheerful one-year-old named Patatan danced across the path!",
-        image: art.page2_patatan,
-        options: [
-          { label: "Dance with Patatan", next: "page3_dance" },
-          { label: "Ask Patatan for help", next: "page3_help" }
-        ]
-      },
-      page2_book: {
-        text: "Lorenzo opened his magic book. A glowing map appeared, pointing toward a crystal mountain and a floating island.",
-        image: art.page2_book,
-        options: [
-          { label: "Follow the map", next: "page3_map" },
-          { label: "Ask the baby dragon to guide", next: "page3_dragonlead" }
-        ]
-      },
-      page3_dance: {
-        text: "Patatan twirled, wiggled, and clapped—poof! Letters glittered in the air: “Happy hearts unlock magic!”",
-        image: art.page3_dance,
-        options: [
-          { label: "Use the Happy Heart Spell", next: "page4_unlock" },
-          { label: "Save the spell for later", next: "page4_continue" }
-        ]
-      },
-      page3_help: {
-        text: "Patatan pointed at twinkling vines. “Mama Dragon is in a secret cave right there!”",
-        image: art.page3_help,
-        options: [
-          { label: "Crawl into the cave", next: "page4_cave" },
-          { label: "Fly above to scout", next: "page4_fly" }
-        ]
-      },
-      page3_map: {
-        text: "The map led through rainbow grasslands to a crystal mountain. They heard a soft humming… like dragon lullabies.",
-        image: art.page3_map,
-        options: [
-          { label: "Climb toward the glow", next: "page4_climb" },
-          { label: "Look for a cave entrance", next: "page4_cave" }
-        ]
-      },
-      page3_dragonlead: {
-        text: "The baby dragon guided them through fluffy clouds to a floating island where the Shadow Witch lived.",
-        image: art.page3_dragonlead,
-        options: [
-          { label: "Land softly on the island", next: "page4_island" },
-          { label: "Circle and peek first", next: "page4_look" }
-        ]
-      },
-      page4_unlock: {
-        text: "Kimberly’s Happy Heart Spell shimmered. The crystal around Mama Dragon melted into sparkles!",
-        image: art.page4_unlock,
-        options: [{ label: "Celebrate!", next: "page5_party" }]
-      },
-      page4_continue: {
-        text: "They followed the path to a glowing cave—shadowy vines rustled and giggled.",
-        image: art.page4_continue,
-        options: [
-          { label: "Use the sparkle wand", next: "page4_unlock" },
-          { label: "Call Patatan to dance", next: "page4_patatanhelp" }
-        ]
-      },
-      page4_cave: {
-        text: "Inside the cave, Mama Dragon slept inside a crystal dome, safe but stuck.",
-        image: art.page4_cave,
-        options: [
-          { label: "Tickle the crystal with magic", next: "page4_unlock" },
-          { label: "Sing a gentle lullaby", next: "page4_unlock" }
-        ]
-      },
-      page4_fly: {
-        text: "From the sky, they spotted the crystal dome and glided down to land nearby.",
-        image: art.page4_fly,
-        options: [{ label: "Free Mama Dragon", next: "page4_unlock" }]
-      },
-      page4_climb: {
-        text: "They climbed carefully and found big dragon footprints. They were close now!",
-        image: art.page4_climb,
-        options: [{ label: "Follow the prints", next: "page4_cave" }]
-      },
-      page4_island: {
-        text: "On the floating island, the Shadow Witch wasn’t scary at all—she was lonely. She agreed to help!",
-        image: art.page4_island,
-        options: [{ label: "Hug the witch", next: "page5_party" }]
-      },
-      page4_look: {
-        text: "Peeking from the clouds, they saw Mama Dragon waving from below. Time to help!",
-        image: art.page4_look,
-        options: [{ label: "Rescue her!", next: "page5_party" }]
-      },
-      page4_patatanhelp: {
-        text: "Patatan shook a glittery banana and wiggled— the vines laughed so hard they vanished!",
-        image: art.page4_patatanhelp,
-        options: [{ label: "Cheer Patatan!", next: "page4_unlock" }]
-      },
-      page5_party: {
-        text: "Hooray! Mama Dragon was free. The forest sparkled and everyone got presents—Kimberly a starglow locket, Lorenzo a whispering bookmark, the dragons cozy wing-warmers, and Patatan a musical rattle! The end… or the beginning!",
-        image: art.page5_party,
-        options: [{ label: "Play again", next: "page1" }]
-      }
+      page1:{ text:"One sunny morning, Kimberly (curly black hair, sparkly backpack) and Lorenzo (brown hair, magic staff) stood at the edge of the Whispering Forest when a baby dragon swooped down. “Help! My mama is missing!”", image:art.page1, options:[{label:"Follow the baby dragon",next:"page2_follow"},{label:"Check Lorenzo’s magic book",next:"page2_book"}]},
+      page2_follow:{ text:"They followed the dragon... a cheerful one-year-old named Patatan danced across the path!", image:art.page2_patatan, options:[{label:"Dance with Patatan",next:"page3_dance"},{label:"Ask Patatan for help",next:"page3_help"}]},
+      page2_book:{ text:"Lorenzo opened his magic book. A glowing map appeared...", image:art.page2_book, options:[{label:"Follow the map",next:"page3_map"},{label:"Ask the baby dragon to guide",next:"page3_dragonlead"}]},
+      page3_dance:{ text:"Patatan twirled, wiggled, and clapped—poof! Letters glittered in the air: “Happy hearts unlock magic!”", image:art.page3_dance, options:[{label:"Use the Happy Heart Spell",next:"page4_unlock"},{label:"Save the spell for later",next:"page4_continue"}]},
+      page3_help:{ text:"Patatan pointed at twinkling vines. “Mama Dragon is in a secret cave right there!”", image:art.page3_help, options:[{label:"Crawl into the cave",next:"page4_cave"},{label:"Fly above to scout",next:"page4_fly"}]},
+      page3_map:{ text:"The map led through rainbow grasslands to a crystal mountain...", image:art.page3_map, options:[{label:"Climb toward the glow",next:"page4_climb"},{label:"Look for a cave entrance",next:"page4_cave"}]},
+      page3_dragonlead:{ text:"The baby dragon guided them through fluffy clouds to a floating island...", image:art.page3_dragonlead, options:[{label:"Land softly on the island",next:"page4_island"},{label:"Circle and peek first",next:"page4_look"}]},
+      page4_unlock:{ text:"Kimberly’s Happy Heart Spell shimmered. The crystal around Mama Dragon melted into sparkles!", image:art.page4_unlock, options:[{label:"Celebrate!",next:"page5_party"}]},
+      page4_continue:{ text:"They followed the path to a glowing cave—shadowy vines rustled and giggled.", image:art.page4_continue, options:[{label:"Use the sparkle wand",next:"page4_unlock"},{label:"Call Patatan to dance",next:"page4_patatanhelp"}]},
+      page4_cave:{ text:"Inside the cave, Mama Dragon slept inside a crystal dome...", image:art.page4_cave, options:[{label:"Tickle the crystal with magic",next:"page4_unlock"},{label:"Sing a gentle lullaby",next:"page4_unlock"}]},
+      page4_fly:{ text:"From the sky, they spotted the crystal dome...", image:art.page4_fly, options:[{label:"Free Mama Dragon",next:"page4_unlock"}]},
+      page4_climb:{ text:"They climbed carefully and found big dragon footprints...", image:art.page4_climb, options:[{label:"Follow the prints",next:"page4_cave"}]},
+      page4_island:{ text:"On the floating island, the Shadow Witch wasn’t scary at all...", image:art.page4_island, options:[{label:"Hug the witch",next:"page5_party"}]},
+      page4_look:{ text:"Peeking from the clouds, they saw Mama Dragon waving...", image:art.page4_look, options:[{label:"Rescue her!",next:"page5_party"}]},
+      page4_patatanhelp:{ text:"Patatan shook a glittery banana and wiggled...", image:art.page4_patatanhelp, options:[{label:"Cheer Patatan!",next:"page4_unlock"}]},
+      page5_party:{ text:"Hooray! Mama Dragon was free. The forest sparkled and everyone got presents!", image:art.page5_party, options:[{label:"Play again",next:"page1"}]},
     };
 
-    const sceneImg = document.getElementById('sceneImg');
-    const sceneText = document.getElementById('sceneText');
-    const choicesEl = document.getElementById('choices');
-    const readBtn = document.getElementById('readBtn');
-    const stopBtn = document.getElementById('stopBtn');
-    const restartBtn = document.getElementById('restartBtn');
+    const sceneImg=document.getElementById('sceneImg');
+    const sceneText=document.getElementById('sceneText');
+    const choicesEl=document.getElementById('choices');
+    const readBtn=document.getElementById('readBtn');
+    const stopBtn=document.getElementById('stopBtn');
+    const restartBtn=document.getElementById('restartBtn');
+    let current='page1';
 
-    let current = 'page1';
-
-    function render() {
-      const s = scenes[current];
-      if (!s) return;
-      sceneImg.src = s.image;
-      sceneText.textContent = s.text;
-      choicesEl.innerHTML = '';
-      s.options.forEach(opt => {
-        const b = document.createElement('button');
-        b.className = 'btn';
-        b.textContent = opt.label;
-        b.onclick = () => { current = opt.next; speakCancel(); render(); };
+    function render(){
+      const s=scenes[current];
+      if(!s) return;
+      sceneImg.src=s.image;
+      sceneText.textContent=s.text;
+      choicesEl.innerHTML='';
+      s.options.forEach(opt=>{
+        const b=document.createElement('button');
+        b.className='btn';
+        b.textContent=opt.label;
+        b.onclick=()=>{current=opt.next;speakCancel();render();};
         choicesEl.appendChild(b);
       });
     }
-
-    function pickNarratorVoice() {
-      const voices = window.speechSynthesis.getVoices();
-      const uk = voices.find(v => v.lang?.toLowerCase().startsWith('en-gb'));
-      if (uk) return uk;
-      return voices.find(v => v.lang?.toLowerCase().startsWith('en-')) || null;
+    function pickNarratorVoice(){
+      const voices=window.speechSynthesis.getVoices();
+      const uk=voices.find(v=>v.lang?.toLowerCase().startsWith('en-gb'));
+      if(uk) return uk;
+      return voices.find(v=>v.lang?.toLowerCase().startsWith('en-'))||null;
     }
-
-    function speakCancel(){ window.speechSynthesis.cancel(); }
+    function speakCancel(){window.speechSynthesis.cancel();}
     function speak(text){
-      const u = new SpeechSynthesisUtterance(text);
-      const v = pickNarratorVoice();
-      if (v) u.voice = v;
-      u.rate = 0.95; u.pitch = 1.0;
+      const u=new SpeechSynthesisUtterance(text);
+      const v=pickNarratorVoice();
+      if(v) u.voice=v;
+      u.rate=0.95; u.pitch=1.0;
       window.speechSynthesis.cancel();
       window.speechSynthesis.speak(u);
     }
-
-    readBtn.addEventListener('click', () => speak(scenes[current].text));
-    stopBtn.addEventListener('click', speakCancel);
-    restartBtn.addEventListener('click', () => { current = 'page1'; speakCancel(); render(); });
-
-    window.speechSynthesis.onvoiceschanged = () => {};
+    readBtn.addEventListener('click',()=>speak(scenes[current].text));
+    stopBtn.addEventListener('click',speakCancel);
+    restartBtn.addEventListener('click',()=>{current='page1';speakCancel();render();});
+    window.speechSynthesis.onvoiceschanged=()=>{};
     render();
   </script>
 </body>
