@@ -89,4 +89,117 @@ const scenes = {
   river_bridge: { text:"At the giggly river, a friendly bridge asks: “Do you promise to be kind?”",                 image:"river_bridge", audio:"river_bridge", options:[{label:"Yes, we promise!", next:"clouds_ride"},{label:"Tell a kind story", next:"cave_mouth"}]},
   clouds_ride:  { text:"They ride on fluffy clouds. The baby dragon points to a floating island!",                  image:"clouds_ride",  audio:"clouds_ride",  options:[{label:"Land on the island", next:"island"},{label:"Peek from the clouds", next:"cave_mouth"}]},
   island:       { text:"A Shadow Witch waves shyly. She isn’t scary—just lonely. She offers to help.",              image:"island",       audio:"island",       options:[{label:"Hug the witch", next:"cave_mouth"},{label:"Ask for a clue", next:"cave_mouth"}]},
-  cave_mouth:   { text:"They find the crystal cave hidden behind laughing vines.",_
+  cave_mouth:   { text:"They find the crystal cave hidden behind laughing vines.",                                  image:"cave_mouth",   audio:"cave_mouth",   options:[{label:"Slip under the vines", next:"crystal_puzzle"},{label:"Ask Patatan to dance the vines away", next:"crystal_puzzle"}]},
+  crystal_puzzle:{text:"Inside, a crystal puzzle sparkles. “Match the shapes!” says a gentle voice.",               image:"crystal_puzzle",audio:"crystal_puzzle",options:[{label:"Match circles", next:"crystal_dome"},{label:"Match stars", next:"crystal_dome"}]},
+  crystal_dome: { text:"Mama Dragon rests inside a crystal dome—safe but stuck.",                                   image:"crystal_dome", audio:"crystal_dome", options:[{label:"Tickle the crystal with magic", next:"rescue"},{label:"Sing a lullaby together", next:"rescue"}]},
+  rescue:       { text:"The dome melts into harmless sparkles. Mama Dragon is free! The cave glows with happy light.", image:"rescue",     audio:"rescue",       options:[{label:"Celebrate!", next:"lair_tea"}]},
+  lair_tea:     { text:"Back at the cozy dragon lair, everyone shares warm tea (and tiny dragon-cookies!).",        image:"lair_tea",     audio:"lair_tea",     options:[{label:"Open the gifts!", next:"party_gifts"}]},
+  party_gifts:  { text:"Hooray! Kimberly gets a starglow locket, Lorenzo a whispering bookmark, the dragons wing-warmers, and Patatan a musical rattle!", image:"party_gifts", audio:"party_gifts", options:[{label:"Play again", next:"forest_meet"},{label:"Back to cover", next:"cover"}]}
+};
+
+/* --------------- Stage elements --------------- */
+const stage      = document.getElementById('stage');
+const loading    = document.getElementById('loading');
+const sparkles   = document.getElementById('sparkles');
+const art        = document.getElementById('art');
+const artWebp    = document.getElementById('artWebp');
+const artPng     = document.getElementById('artPng');
+const sceneText  = document.getElementById('sceneText');
+const choicesEl  = document.getElementById('choices');
+const readBtn    = document.getElementById('readBtn');
+const stopBtn    = document.getElementById('stopBtn');
+const restartBtn = document.getElementById('restartBtn');
+const narration  = document.getElementById('narration');
+const flip       = document.getElementById('flip');
+
+let current = 'cover';
+
+/* Sparkle overlay during loading */
+(function makeSparkles(){
+  for(let i=0;i<22;i++){
+    const s=document.createElement('div');
+    s.className='sparkle';
+    s.style.left = Math.random()*100+'%';
+    s.style.top  = (10+Math.random()*80)+'%';
+    s.style.animationDelay = (Math.random()*2)+'s';
+    sparkles.appendChild(s);
+  }
+})();
+
+/* Calm male TTS preference */
+function pickCalmMaleVoice(){
+  if (!window.speechSynthesis) return null;
+  const voices = window.speechSynthesis.getVoices() || [];
+  const preferredNames = ["Daniel","George","Guy","Matthew","Brian","Arthur","James","Christopher","Alex","Hugh"];
+  const best = voices.find(v => (v.lang||'').toLowerCase().startsWith('en-gb') && preferredNames.some(n=>v.name.toLowerCase().includes(n.toLowerCase())));
+  return best || voices.find(v => (v.lang||'').toLowerCase().startsWith('en-gb'))
+              || voices.find(v => (v.lang||'').toLowerCase().startsWith('en-')) || null;
+}
+function stopAll(){
+  narration.pause(); narration.currentTime=0;
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
+}
+function speakTTS(text){
+  if (!window.speechSynthesis) return;
+  const u = new SpeechSynthesisUtterance(text.replace(/([.!?])\s/g,"$1  "));
+  const v = pickCalmMaleVoice(); if (v) u.voice=v;
+  u.rate=0.92; u.pitch=0.98; u.volume=1;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(u);
+}
+
+/* Load scene art with WebP first, PNG fallback */
+function setArtBase(name){
+  artWebp.srcset = `images/${name}.webp 1x, images/${name}@2x.webp 2x`;
+  artPng.src = `images/${name}.png`;
+  artPng.loading = (name==='cover' || name==='forest_meet') ? 'eager' : 'lazy';
+}
+
+/* Render a scene */
+function render(){
+  const s = scenes[current]; if (!s) return;
+  setArtBase(s.image);
+  sceneText.textContent = s.text;
+  choicesEl.innerHTML='';
+  s.options.forEach(opt=>{
+    const b=document.createElement('button');
+    b.className='btn';
+    b.textContent=opt.label;
+    b.onclick=()=>{ stopAll(); flip.currentTime=0; flip.play().catch(()=>{}); current=opt.next; render(); };
+    choicesEl.appendChild(b);
+  });
+}
+
+/* Show stage after cover preloads */
+function showStage(){
+  loading.classList.remove('show');
+  setTimeout(()=>{
+    loading.hidden = true;
+    stage.hidden = false;
+    requestAnimationFrame(()=> stage.classList.add('show'));
+  }, 300);
+}
+
+/* Controls */
+readBtn.addEventListener('click', async ()=>{
+  const s = scenes[current];
+  stopAll();
+  // Try MP3 first
+  if (s && s.audio){
+    narration.src = `audio/${s.audio}.mp3`;
+    try { await narration.play(); return; } catch(e){}
+  }
+  // Fallback to TTS
+  speakTTS(s.text);
+});
+stopBtn.addEventListener('click', stopAll);
+restartBtn.addEventListener('click', ()=>{ stopAll(); current='cover'; render(); });
+
+/* Init */
+render();
+/* Simulate quick load → reveal stage with fade */
+window.addEventListener('load', ()=> setTimeout(showStage, 600));
+if (window.speechSynthesis) window.speechSynthesis.onvoiceschanged = ()=>{};
+</script>
+</body>
+</html>
