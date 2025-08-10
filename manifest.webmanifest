@@ -1,0 +1,21 @@
+{
+  "name": "Kimberly & Lorenzo’s Magical Dragon Quest",
+  "short_name": "Dragon Quest",
+  "description": "Illustrated, narrated, interactive children’s storybook (PWA).",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#fffaf4",
+  "theme_color": "#ff9fc4",
+  "icons": [
+    {
+      "src": "images/cover.webp",
+      "sizes": "512x288",
+      "type": "image/webp"
+    },
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
+    }
+  ]
+}

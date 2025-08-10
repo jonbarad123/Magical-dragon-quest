@@ -1,165 +1,167 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Kimberly & Lorenzo’s Magical Dragon Quest — Interactive</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
-  <style>
-    :root { --bg:#fffaf4; --card:#ffffff; --text:#2c2c2c; --accent:#6b5cff; --accent2:#ff6bb0; }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: 'Nunito', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(1200px 800px at 20% -10%, #fff3dd, transparent),
-                  radial-gradient(1000px 700px at 120% 10%, #ffe6f2, transparent),
-                  var(--bg);
-      color: var(--text);
-    }
-    .wrap { max-width: 960px; margin: 20px auto; padding: 12px; }
-    .title { font-size: 28px; font-weight: 900; margin: 8px 4px 14px; display:flex; gap:8px; align-items:center; }
-    .badge { font-size:12px; font-weight:800; color:#fff; background:linear-gradient(135deg,var(--accent),var(--accent2)); padding:6px 10px; border-radius:999px; }
-    .card { background: var(--card); border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,.08); padding: 16px; }
-    .scene {
-      width: 100%; aspect-ratio: 16/9; border-radius: 18px; overflow: hidden;
-      border: 4px solid #fff; box-shadow: 0 8px 20px rgba(0,0,0,.06);
-    }
-    .scene img { width: 100%; height: 100%; object-fit: cover; display:block; }
-    .text { font-size: 20px; line-height: 1.55; font-weight: 700; margin: 12px 4px; }
-    .choices { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 8px; }
-    .btn {
-      font-size: 18px; font-weight: 800; padding: 14px 18px; border-radius: 14px; border: none; cursor: pointer;
-      background:#f4f3ff; color:#2d2a65; box-shadow:0 6px 14px rgba(107,92,255,.22);
-      transition: transform .08s ease, box-shadow .2s ease, background .2s ease;
-    }
-    .btn:hover { transform: translateY(-1px); }
-    .btn:active { transform: translateY(1px); }
-    .primary { background: linear-gradient(135deg,var(--accent),var(--accent2)); color: #fff; box-shadow: 0 8px 18px rgba(255,107,176,.35); }
-    .bar { display:flex; gap:8px; align-items:center; justify-content:space-between; margin-top:10px; flex-wrap:wrap; }
-    .small { font-size:14px; background:#ffe9f3; color:#6f2854; padding:8px 10px; border-radius:999px; border:none; cursor:pointer; }
-    .footer { text-align:center; color:#6b6b6b; font-size:14px; margin-top:16px; }
-    @media (min-width:700px){ .choices { grid-template-columns: 1fr 1fr;} }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Kimberly & Lorenzo’s Magical Dragon Quest</title>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#ff9fc4">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="images/cover.webp">
+<link rel="preload" as="image" href="images/forest_meet.webp">
+<style>
+  :root{--bg:#fffaf4;--card:#ffffff;--text:#2c2c2c;--accent:#6b5cff;--accent2:#ff6bb0}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Nunito',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+       background: radial-gradient(1200px 800px at 20% -10%, #fff3dd, transparent),
+                   radial-gradient(1000px 700px at 120% 10%, #ffe6f2, transparent), var(--bg);color:var(--text)}
+  .wrap{max-width:960px;margin:20px auto;padding:12px}
+  .title{font-size:28px;font-weight:900;margin:8px 4px 14px;display:flex;gap:8px;align-items:center}
+  .badge{font-size:12px;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent2));padding:6px 10px;border-radius:999px}
+  .card{background:var(--card);border-radius:24px;box-shadow:0 10px 30px rgba(0,0,0,.08);padding:16px;position:relative;overflow:hidden}
+  .scene{width:100%;aspect-ratio:16/9;border-radius:18px;overflow:hidden;border:4px solid #fff;box-shadow:0 8px 20px rgba(0,0,0,.06);position:relative}
+  .scene img{width:100%;height:100%;object-fit:cover;display:block}
+  .fade{opacity:0;transition:opacity .6s ease}.fade.show{opacity:1}
+  .loading-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#0000;pointer-events:none}
+  .sparkle{position:absolute;width:6px;height:6px;border-radius:50%;background:radial-gradient(circle,#ffd76a 0%,#ffd76a 40%,transparent 70%);opacity:.0;animation: twinkle 2.2s infinite ease-in-out}
+  @keyframes twinkle{0%,100%{opacity:0;transform:translateY(0) scale(.7)}50%{opacity:.9;transform:translateY(-8px) scale(1)}}
+  .text{font-size:20px;line-height:1.55;font-weight:700;margin:12px 4px}
+  .choices{display:grid;grid-template-columns:1fr;gap:10px;margin-top:8px}
+  .btn{font-size:18px;font-weight:800;padding:14px 18px;border-radius:14px;border:none;cursor:pointer;background:#f4f3ff;color:#2d2a65;box-shadow:0 6px 14px rgba(107,92,255,.22);transition:transform .08s ease, box-shadow .2s ease, background .2s ease}
+  .btn:hover{transform:translateY(-1px)} .btn:active{transform:translateY(1px)}
+  .primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 8px 18px rgba(255,107,176,.35)}
+  .bar{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:10px;flex-wrap:wrap}
+  .small{font-size:14px;background:#ffe9f3;color:#6f2854;padding:8px 10px;border-radius:999px;border:none;cursor:pointer}
+  .footer{text-align:center;color:#6b6b6b;font-size:14px;margin-top:16px}
+  @media (min-width:700px){.choices{grid-template-columns:1fr 1fr}}
+</style>
 </head>
 <body>
   <div class="wrap">
-    <div class="title">
-      Kimberly & Lorenzo’s Magical Dragon Quest
-      <span class="badge">Interactive</span>
-    </div>
-
+    <div class="title">Kimberly & Lorenzo’s Magical Dragon Quest <span class="badge">v1.1 • WebP‑only</span></div>
     <div class="card">
-      <div class="scene"><img id="sceneImg" alt="Illustrated scene"></div>
-      <div id="sceneText" class="text"></div>
-      <div id="choices" class="choices"></div>
-      <div class="bar">
-        <button id="readBtn" class="btn primary">🔊 Read Aloud</button>
-        <button id="stopBtn" class="small">Stop</button>
-        <button id="restartBtn" class="small">Restart</button>
+      <div id="loading" class="scene fade show" aria-hidden="false">
+        <img src="images/loading.webp" alt="Loading the magical forest..." />
+        <div class="loading-overlay" id="sparkles"></div>
+      </div>
+      <div id="stage" class="fade" aria-live="polite" aria-busy="true" hidden>
+        <div class="scene"><img id="art" alt="Illustrated scene" loading="eager" /></div>
+        <div id="sceneText" class="text"></div>
+        <div id="choices" class="choices"></div>
+        <div class="bar">
+          <button id="readBtn" class="btn primary">🔊 Read Aloud</button>
+          <button id="stopBtn" class="small">Stop</button>
+          <button id="restartBtn" class="small">Restart</button>
+        </div>
+        <audio id="narration" preload="auto"></audio>
+        <audio id="flip" preload="auto" src="audio/pageflip.mp3"></audio>
       </div>
     </div>
-
-    <div class="footer">Enjoy this magical adventure ✨</div>
+    <div class="footer">Installable app (PWA) • Offline after first load • Calm male narrator (MP3 → TTS)</div>
   </div>
 
-  <script>
-    function svgPlaceholder(title, color1, color2, emoji) {
-      const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='1600' height='900'>
-          <defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
-            <stop offset='0%' stop-color='${color1}'/>
-            <stop offset='100%' stop-color='${color2}'/>
-          </linearGradient></defs>
-          <rect width='100%' height='100%' fill='url(#g)'/>
-          <g font-family='Nunito, Arial, sans-serif' text-anchor='middle'>
-            <text x='800' y='450' font-size='160' fill='rgba(255,255,255,.9)'>${emoji}</text>
-            <text x='800' y='820' font-size='56' font-weight='900' fill='rgba(255,255,255,.95)'>${title}</text>
-          </g>
-        </svg>`;
-      return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
-    }
+<script src="sw-register.js"></script>
+<script>
+const scenes = {
+  cover:        { text:"Welcome! Tap to begin the adventure of Kimberly, Lorenzo, and a very helpful baby dragon.", image:"cover",        audio:"cover"        , options:[{label:"Start Adventure", next:"forest_meet"}] },
+  forest_meet:  { text:"In the Whispering Forest, a baby dragon swoops down: “Help! My mama is missing!”",          image:"forest_meet",  audio:"forest_meet"  , options:[{label:"Follow the baby dragon", next:"follow_dragon"},{label:"Check Lorenzo’s magic book", next:"check_book"}]},
+  follow_dragon:{ text:"They follow the dragon between golden trees. Sparkles float like tiny stars.",               image:"follow_dragon",audio:"follow_dragon", options:[{label:"Keep following", next:"patatan_dance"},{label:"Call out for Mama Dragon", next:"cave_mouth"}]},
+  check_book:   { text:"Lorenzo opens his magic book. A glowing map shows a cave and a floating island.",           image:"check_book",   audio:"check_book"   , options:[{label:"Take the meadow path", next:"meadow"},{label:"Ride the clouds to the island", next:"clouds_ride"}]},
+  patatan_dance:{ text:"In the meadow, a tanned one-year-old named Patatan wiggles and claps—letters glitter: “Happy hearts unlock magic!”", image:"patatan_dance", audio:"patatan_dance", options:[{label:"Save the spell for later", next:"river_bridge"},{label:"Use the happy spell now", next:"crystal_puzzle"}]},
+  meadow:       { text:"They cross a rainbow meadow. Butterflies twirl like confetti.",                             image:"meadow",       audio:"meadow",       options:[{label:"Head to the river bridge", next:"river_bridge"},{label:"Look for the cave entrance", next:"cave_mouth"}]},
+  river_bridge: { text:"At the giggly river, a friendly bridge asks: “Do you promise to be kind?”",                 image:"river_bridge", audio:"river_bridge", options:[{label:"Yes, we promise!", next:"clouds_ride"},{label:"Tell a kind story", next:"cave_mouth"}]},
+  clouds_ride:  { text:"They ride on fluffy clouds. The baby dragon points to a floating island!",                  image:"clouds_ride",  audio:"clouds_ride",  options:[{label:"Land on the island", next:"island"},{label:"Peek from the clouds", next:"cave_mouth"}]},
+  island:       { text:"A Shadow Witch waves shyly. She isn’t scary—just lonely. She offers to help.",              image:"island",       audio:"island",       options:[{label:"Hug the witch", next:"cave_mouth"},{label:"Ask for a clue", next:"cave_mouth"}]},
+  cave_mouth:   { text:"They find the crystal cave hidden behind laughing vines.",                                  image:"cave_mouth",   audio:"cave_mouth",   options:[{label:"Slip under the vines", next:"crystal_puzzle"},{label:"Ask Patatan to dance the vines away", next:"crystal_puzzle"}]},
+  crystal_puzzle:{text:"Inside, a crystal puzzle sparkles. “Match the shapes!” says a gentle voice.",               image:"crystal_puzzle",audio:"crystal_puzzle",options:[{label:"Match circles", next:"crystal_dome"},{label:"Match stars", next:"crystal_dome"}]},
+  crystal_dome: { text:"Mama Dragon rests inside a crystal dome—safe but stuck.",                                   image:"crystal_dome", audio:"crystal_dome", options:[{label:"Tickle the crystal with magic", next:"rescue"},{label:"Sing a lullaby together", next:"rescue"}]},
+  rescue:       { text:"The dome melts into harmless sparkles. Mama Dragon is free! The cave glows with happy light.", image:"rescue",     audio:"rescue",       options:[{label:"Celebrate!", next:"lair_tea"}]},
+  lair_tea:     { text:"Back at the cozy dragon lair, everyone shares warm tea (and tiny dragon-cookies!).",        image:"lair_tea",     audio:"lair_tea",     options:[{label:"Open the gifts!", next:"party_gifts"}]},
+  party_gifts:  { text:"Hooray! Kimberly gets a starglow locket, Lorenzo a whispering bookmark, the dragons wing-warmers, and Patatan a musical rattle!", image:"party_gifts", audio:"party_gifts", options:[{label:"Play again", next:"forest_meet"},{label:"Back to cover", next:"cover"}]}
+};
 
-    const art = {
-      page1: svgPlaceholder("Whispering Forest • Baby Dragon","#66a3ff","#ffd179","🐉"),
-      page2_patatan: svgPlaceholder("Patatan’s Dance","#ff6fa8","#ffe08a","🕺"),
-      page2_book: svgPlaceholder("Lorenzo’s Magic Book","#ffd179","#66d3c0","📖"),
-      page3_dance: svgPlaceholder("Happy Hearts Spell","#66d3c0","#a58bff","✨"),
-      page3_help: svgPlaceholder("Secret Cave Under Vines","#a58bff","#66d38b","🌿"),
-      page3_map: svgPlaceholder("Rainbow Grasslands & Crystal Peak","#66d38b","#66a3ff","🗺️"),
-      page3_dragonlead: svgPlaceholder("Floating Island in the Clouds","#6b5cff","#ff84b0","🏝️"),
-      page4_unlock: svgPlaceholder("Crystal Melts Into Sparkles","#ffdc5e","#66d3c0","💖"),
-      page4_continue: svgPlaceholder("Glowing Cave • Shadowy Vines","#6bd7b9","#5b8def","🕸️"),
-      page4_cave: svgPlaceholder("Crystal Dome • Sleeping Mama","#a76be8","#ffd179","💤"),
-      page4_fly: svgPlaceholder("Glide Down Beside the Dome","#5b8def","#ffd179","☁️"),
-      page4_climb: svgPlaceholder("Careful Climb • Dragon Prints","#9aa3a7","#66d38b","👣"),
-      page4_island: svgPlaceholder("Friendly Shadow Witch","#ff9c54","#6b5cff","🧙‍♀️"),
-      page4_look: svgPlaceholder("Mama Dragon Waves","#ff6f6f","#ffd179","👋"),
-      page4_patatanhelp: svgPlaceholder("Patatan vs. Giggly Vines","#1fcfb2","#ffb3d1","🍌"),
-      page5_party: svgPlaceholder("Forest Party • Gifts for All","#b07be2","#ffcf5e","🎁"),
-    };
+const stage      = document.getElementById('stage');
+const loading    = document.getElementById('loading');
+const sparkles   = document.getElementById('sparkles');
+const art        = document.getElementById('art');
+const sceneText  = document.getElementById('sceneText');
+const choicesEl  = document.getElementById('choices');
+const readBtn    = document.getElementById('readBtn');
+const stopBtn    = document.getElementById('stopBtn');
+const restartBtn = document.getElementById('restartBtn');
+const narration  = document.getElementById('narration');
+const flip       = document.getElementById('flip');
 
-    const scenes = {
-      page1:{ text:"One sunny morning, Kimberly (curly black hair, sparkly backpack) and Lorenzo (brown hair, magic staff) stood at the edge of the Whispering Forest when a baby dragon swooped down. “Help! My mama is missing!”", image:art.page1, options:[{label:"Follow the baby dragon",next:"page2_follow"},{label:"Check Lorenzo’s magic book",next:"page2_book"}]},
-      page2_follow:{ text:"They followed the dragon... a cheerful one-year-old named Patatan danced across the path!", image:art.page2_patatan, options:[{label:"Dance with Patatan",next:"page3_dance"},{label:"Ask Patatan for help",next:"page3_help"}]},
-      page2_book:{ text:"Lorenzo opened his magic book. A glowing map appeared...", image:art.page2_book, options:[{label:"Follow the map",next:"page3_map"},{label:"Ask the baby dragon to guide",next:"page3_dragonlead"}]},
-      page3_dance:{ text:"Patatan twirled, wiggled, and clapped—poof! Letters glittered in the air: “Happy hearts unlock magic!”", image:art.page3_dance, options:[{label:"Use the Happy Heart Spell",next:"page4_unlock"},{label:"Save the spell for later",next:"page4_continue"}]},
-      page3_help:{ text:"Patatan pointed at twinkling vines. “Mama Dragon is in a secret cave right there!”", image:art.page3_help, options:[{label:"Crawl into the cave",next:"page4_cave"},{label:"Fly above to scout",next:"page4_fly"}]},
-      page3_map:{ text:"The map led through rainbow grasslands to a crystal mountain...", image:art.page3_map, options:[{label:"Climb toward the glow",next:"page4_climb"},{label:"Look for a cave entrance",next:"page4_cave"}]},
-      page3_dragonlead:{ text:"The baby dragon guided them through fluffy clouds to a floating island...", image:art.page3_dragonlead, options:[{label:"Land softly on the island",next:"page4_island"},{label:"Circle and peek first",next:"page4_look"}]},
-      page4_unlock:{ text:"Kimberly’s Happy Heart Spell shimmered. The crystal around Mama Dragon melted into sparkles!", image:art.page4_unlock, options:[{label:"Celebrate!",next:"page5_party"}]},
-      page4_continue:{ text:"They followed the path to a glowing cave—shadowy vines rustled and giggled.", image:art.page4_continue, options:[{label:"Use the sparkle wand",next:"page4_unlock"},{label:"Call Patatan to dance",next:"page4_patatanhelp"}]},
-      page4_cave:{ text:"Inside the cave, Mama Dragon slept inside a crystal dome...", image:art.page4_cave, options:[{label:"Tickle the crystal with magic",next:"page4_unlock"},{label:"Sing a gentle lullaby",next:"page4_unlock"}]},
-      page4_fly:{ text:"From the sky, they spotted the crystal dome...", image:art.page4_fly, options:[{label:"Free Mama Dragon",next:"page4_unlock"}]},
-      page4_climb:{ text:"They climbed carefully and found big dragon footprints...", image:art.page4_climb, options:[{label:"Follow the prints",next:"page4_cave"}]},
-      page4_island:{ text:"On the floating island, the Shadow Witch wasn’t scary at all...", image:art.page4_island, options:[{label:"Hug the witch",next:"page5_party"}]},
-      page4_look:{ text:"Peeking from the clouds, they saw Mama Dragon waving...", image:art.page4_look, options:[{label:"Rescue her!",next:"page5_party"}]},
-      page4_patatanhelp:{ text:"Patatan shook a glittery banana and wiggled...", image:art.page4_patatanhelp, options:[{label:"Cheer Patatan!",next:"page4_unlock"}]},
-      page5_party:{ text:"Hooray! Mama Dragon was free. The forest sparkled and everyone got presents!", image:art.page5_party, options:[{label:"Play again",next:"page1"}]},
-    };
+let current = 'cover';
 
-    const sceneImg=document.getElementById('sceneImg');
-    const sceneText=document.getElementById('sceneText');
-    const choicesEl=document.getElementById('choices');
-    const readBtn=document.getElementById('readBtn');
-    const stopBtn=document.getElementById('stopBtn');
-    const restartBtn=document.getElementById('restartBtn');
-    let current='page1';
+(function makeSparkles(){
+  for(let i=0;i<20;i++){
+    const s=document.createElement('div');
+    s.className='sparkle';
+    s.style.left = Math.random()*100+'%';
+    s.style.top  = (10+Math.random()*80)+'%';
+    s.style.animationDelay = (Math.random()*2)+'s';
+    sparkles.appendChild(s);
+  }
+})();
 
-    function render(){
-      const s=scenes[current];
-      if(!s) return;
-      sceneImg.src=s.image;
-      sceneText.textContent=s.text;
-      choicesEl.innerHTML='';
-      s.options.forEach(opt=>{
-        const b=document.createElement('button');
-        b.className='btn';
-        b.textContent=opt.label;
-        b.onclick=()=>{current=opt.next;speakCancel();render();};
-        choicesEl.appendChild(b);
-      });
-    }
-    function pickNarratorVoice(){
-      const voices=window.speechSynthesis.getVoices();
-      const uk=voices.find(v=>v.lang?.toLowerCase().startsWith('en-gb'));
-      if(uk) return uk;
-      return voices.find(v=>v.lang?.toLowerCase().startsWith('en-'))||null;
-    }
-    function speakCancel(){window.speechSynthesis.cancel();}
-    function speak(text){
-      const u=new SpeechSynthesisUtterance(text);
-      const v=pickNarratorVoice();
-      if(v) u.voice=v;
-      u.rate=0.95; u.pitch=1.0;
-      window.speechSynthesis.cancel();
-      window.speechSynthesis.speak(u);
-    }
-    readBtn.addEventListener('click',()=>speak(scenes[current].text));
-    stopBtn.addEventListener('click',speakCancel);
-    restartBtn.addEventListener('click',()=>{current='page1';speakCancel();render();});
-    window.speechSynthesis.onvoiceschanged=()=>{};
-    render();
-  </script>
+function pickCalmMaleVoice(){
+  if (!window.speechSynthesis) return null;
+  const voices = window.speechSynthesis.getVoices() || [];
+  const preferred = ["Daniel","George","Guy","Matthew","Brian","Arthur","James","Christopher","Alex","Hugh"];
+  const gb = voices.find(v => (v.lang||'').toLowerCase().startsWith('en-gb') && preferred.some(n=>v.name.toLowerCase().includes(n.toLowerCase())));
+  return gb || voices.find(v => (v.lang||'').toLowerCase().startsWith('en-gb')) || voices.find(v => (v.lang||'').toLowerCase().startsWith('en-')) || null;
+}
+function stopAll(){ narration.pause(); narration.currentTime=0; if (window.speechSynthesis) window.speechSynthesis.cancel(); }
+function speakTTS(text){
+  if (!window.speechSynthesis) return;
+  const u = new SpeechSynthesisUtterance(text.replace(/([.!?])\s/g,"$1  "));
+  const v = pickCalmMaleVoice(); if (v) u.voice=v;
+  u.rate=0.92; u.pitch=0.98; u.volume=1;
+  window.speechSynthesis.cancel(); window.speechSynthesis.speak(u);
+}
+
+function setArt(name){
+  art.src = `images/${name}.webp`;
+  art.loading = (name==='cover' || name==='forest_meet') ? 'eager' : 'lazy';
+}
+function render(){
+  const s = scenes[current]; if (!s) return;
+  setArt(s.image);
+  sceneText.textContent = s.text;
+  choicesEl.innerHTML='';
+  s.options.forEach(opt=>{
+    const b=document.createElement('button');
+    b.className='btn'; b.textContent=opt.label;
+    b.onclick=()=>{ stopAll(); try{flip.currentTime=0; flip.play();}catch(e){} current=opt.next; render(); };
+    choicesEl.appendChild(b);
+  });
+}
+function showStage(){
+  loading.classList.remove('show');
+  setTimeout(()=>{
+    loading.hidden = true;
+    stage.hidden = false;
+    requestAnimationFrame(()=> stage.classList.add('show'));
+  }, 300);
+}
+
+readBtn.addEventListener('click', async ()=>{
+  const s = scenes[current]; stopAll();
+  if (s && s.audio){
+    narration.src = `audio/${s.audio}.mp3`;
+    try { await narration.play(); return; } catch(e){}
+  }
+  speakTTS(s.text);
+});
+stopBtn.addEventListener('click', stopAll);
+restartBtn.addEventListener('click', ()=>{ stopAll(); current='cover'; render(); });
+
+render();
+window.addEventListener('load', ()=> setTimeout(showStage, 600));
+if (window.speechSynthesis) window.speechSynthesis.onvoiceschanged = ()=>{};
+</script>
 </body>
 </html>
